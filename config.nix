@@ -7,6 +7,7 @@
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
+      java.enable = true;
       rust.enable = true;
       python.enable = true;
       ts.enable = true;
