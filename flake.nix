@@ -6,9 +6,9 @@
     nvf.url = "github:notashelf/nvf";
   };
   outputs = {
-    self,
     nixpkgs,
     nvf,
+    ...
   } @ inputs: let
     neovimConfigured = {isFull}:
       inputs.nvf.lib.neovimConfiguration {
@@ -23,7 +23,7 @@
       min = (neovimConfigured {isFull = false;}).neovim;
     };
     nixosModule = import ./nixosModule.nix {
-      inherit neovimConfigured;
+      neovimConfigured = neovimConfigured {isFull = true;};
     };
   };
 }
