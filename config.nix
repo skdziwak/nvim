@@ -1,7 +1,7 @@
-{
+{isFull}: {lib, ...}: {
   config.vim = {
     # Language Servers
-    languages = {
+    languages = lib.mkIf isFull {
       enableLSP = true;
       enableFormat = true;
       enableTreesitter = true;
@@ -20,7 +20,7 @@
     };
 
     # Lsp config
-    lsp = {
+    lsp = lib.mkIf isFull {
       formatOnSave = true; # Format code when saving
       lspkind.enable = false; # Adds vscode-like pictograms to completion menu
       lightbulb.enable = true; # Shows a lightbulb when code actions are available
@@ -32,7 +32,7 @@
       nvim-docs-view.enable = true; # Shows LSP hover documentation in sidebar
     };
 
-    debugger = {
+    debugger = lib.mkIf isFull {
       nvim-dap = {
         enable = true; # Debug Adapter Protocol support
         ui.enable = true; # UI for debug sessions
@@ -149,7 +149,7 @@
     comments.comment-nvim.enable = true; # Easy code commenting
 
     # AI
-    assistant = {
+    assistant = lib.mkIf isFull {
       chatgpt.enable = true;
       copilot = {
         enable = true;

@@ -10,15 +10,17 @@
     nixpkgs,
     nvf,
   } @ inputs: let
-    neovimConfigured = inputs.nvf.lib.neovimConfiguration {
-      inherit (nixpkgs.legacyPackages.x86_64-linux) pkgs;
-      modules = [
-        ./config.nix
-      ];
-    };
+    neovimConfigured = {isFull}:
+      inputs.nvf.lib.neovimConfiguration {
+        inherit (nixpkgs.legacyPackages.x86_64-linux) pkgs;
+        modules = [
+          (import ./config.nix {inherit isFull;})
+        ];
+      };
   in {
     packages.x86_64-linux = {
-      default = neovimConfigured.neovim;
+      default = (neovimConfigured {isFull = true;}).neovim;
+      min = (neovimConfigured {isFull = false;}).neovim;
     };
     nixosModule = import ./nixosModule.nix {
       inherit neovimConfigured;
