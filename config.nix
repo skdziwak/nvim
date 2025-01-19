@@ -1,8 +1,4 @@
 {
-  pkgs,
-  lib,
-  ...
-}: {
   config.vim = {
     # Language Servers
     languages = {
