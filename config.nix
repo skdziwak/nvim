@@ -7,6 +7,7 @@
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
+      terraform.enable = true;
       java.enable = true;
       rust.enable = true;
       python.enable = true;
