@@ -28,7 +28,7 @@
       lspsaga.enable = false; # Provides enhanced LSP UI components
       trouble.enable = true; # Pretty list for diagnostics, references, etc.
       lspSignature.enable = true; # Shows function signature when typing
-      lsplines.enable = true; # Shows diagnostic virtual lines
+      lsplines.enable = false; # Shows diagnostic virtual lines
       otter-nvim.enable = true; # Enhanced markdown/quarto preview with LSP features
       nvim-docs-view.enable = true; # Shows LSP hover documentation in sidebar
     };
