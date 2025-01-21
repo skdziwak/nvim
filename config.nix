@@ -162,6 +162,13 @@
     extraPlugins = with pkgs.vimPlugins; {
       copilot = lib.mkIf isFull {
         package = copilot-vim;
+        setup = ''
+          vim.keymap.set('i', '<C-s>', 'copilot#Accept("\\<CR>")', {
+            expr = true,
+            replace_keycodes = false
+          })
+          vim.g.copilot_no_tab_map = true
+        '';
       };
       copilot-chat = lib.mkIf isFull {
         package = CopilotChat-nvim;
