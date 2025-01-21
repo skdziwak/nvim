@@ -10,9 +10,16 @@
     nvf,
     ...
   } @ inputs: let
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      config = {
+        allowUnfree = true;
+        allowUnfreePredicate = _: true;
+      };
+    };
     neovimConfigured = {isFull}:
       inputs.nvf.lib.neovimConfiguration {
-        inherit (nixpkgs.legacyPackages.x86_64-linux) pkgs;
+        inherit pkgs;
         modules = [
           (import ./config.nix {inherit isFull;})
         ];
