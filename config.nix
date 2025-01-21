@@ -156,14 +156,13 @@
     # AI
     assistant = lib.mkIf isFull {
       chatgpt.enable = true;
-      copilot = {
-        enable = true;
-        cmp.enable = true;
-      };
     };
 
     # Extra plugins
     extraPlugins = with pkgs.vimPlugins; {
+      copilot = lib.mkIf isFull {
+        package = copilot-vim;
+      };
       copilot-chat = lib.mkIf isFull {
         package = CopilotChat-nvim;
         setup = ''
