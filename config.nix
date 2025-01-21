@@ -1,4 +1,8 @@
-{isFull}: {lib, ...}: {
+{isFull}: {
+  lib,
+  pkgs,
+  ...
+}: {
   config.vim = {
     # Language Servers
     languages = lib.mkIf isFull {
@@ -158,6 +162,19 @@
       };
     };
 
+    # Extra plugins
+    extraPlugins = with pkgs.vimPlugins; {
+      copilot-chat = lib.mkIf isFull {
+        package = CopilotChat-nvim;
+        setup = ''
+          require("CopilotChat").setup {
+
+          }
+
+        '';
+      };
+    };
+
     # Keymaps
     keymaps = [
       {
@@ -166,6 +183,13 @@
         mode = ["i"];
         silent = true;
         desc = "Escape insert mode";
+      }
+      {
+        key = "<leader>aw";
+        action = ":CopilotChat<CR>";
+        mode = ["n"];
+        silent = true;
+        desc = "Open copilot chat";
       }
     ];
   };
