@@ -163,7 +163,9 @@
       copilot = lib.mkIf isFull {
         package = copilot-vim;
         setup = ''
-          vim.keymap.set('i', '<C-s>', 'copilot#Accept("\\<CR>")', {
+
+          vim.api.nvim_set_keymap('i', '<C-a>', "", { noremap = true, silent = true })
+          vim.keymap.set('i', '<C-a>', 'copilot#Accept("\\<CR>")', {
             expr = true,
             replace_keycodes = false
           })
@@ -191,11 +193,25 @@
         desc = "Escape insert mode";
       }
       {
+        key = "<leader>aW";
+        action = ":Copilot<CR>";
+        mode = ["n"];
+        silent = true;
+        desc = "Open copilot suggestions";
+      }
+      {
         key = "<leader>aw";
         action = ":CopilotChat<CR>";
         mode = ["n"];
         silent = true;
         desc = "Open copilot chat";
+      }
+      {
+        key = "<leader>gr";
+        action = ":Gitsigns reset_hunk<CR>";
+        mode = ["n"];
+        silent = true;
+        desc = "Reset git hunk";
       }
     ];
   };
