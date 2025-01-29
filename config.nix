@@ -10,11 +10,9 @@
       enableFormat = true;
       enableTreesitter = true;
       enableExtraDiagnostics = true;
-
       terraform.enable = true;
       java.enable = true;
       rust.enable = true;
-      python.enable = true;
       ts.enable = true;
       clang.enable = true;
       markdown.enable = true;
@@ -35,6 +33,20 @@
       lsplines.enable = false; # Shows diagnostic virtual lines
       otter-nvim.enable = true; # Enhanced markdown/quarto preview with LSP features
       nvim-docs-view.enable = true; # Shows LSP hover documentation in sidebar
+      lspconfig.sources.python-lsp = ''
+        lspconfig.basedpyright.setup {
+          capabilities = capabilities;
+          on_attach = default_on_attach;
+          settings = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = false,
+              typeCheckingMode = "off"
+            }
+          };
+          cmd = { "${pkgs.basedpyright}/bin/basedpyright-langserver", "--stdio" };
+        }
+      '';
     };
 
     debugger = lib.mkIf isFull {
@@ -176,12 +188,22 @@
         package = CopilotChat-nvim;
         setup = ''
           require("CopilotChat").setup {
-
+            prompts = {
+              Full = {
+                prompt = "> You rewrite whole files in code blocks without line numbers."
+              }
+            }
           }
-
         '';
       };
     };
+
+    luaConfigRC.indentation = ''
+      -- Keep selection after indenting
+      vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
+
+    '';
 
     # Keymaps
     keymaps = [
@@ -191,6 +213,13 @@
         mode = ["i"];
         silent = true;
         desc = "Escape insert mode";
+      }
+      {
+        key = "<leader>y";
+        desc = "Copy a code block";
+        mode = "n";
+        silent = true;
+        action = "?```<CR>jV/```<CR>ky<C-o>";
       }
       {
         key = "<leader>aW";
