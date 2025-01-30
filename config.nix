@@ -167,7 +167,7 @@
 
     # AI
     assistant = lib.mkIf isFull {
-      chatgpt.enable = true;
+      chatgpt.enable = false;
     };
 
     # Extra plugins
