@@ -172,6 +172,12 @@
 
     # Extra plugins
     extraPlugins = with pkgs.vimPlugins; {
+      nerdtree = {
+        package = nerdtree;
+        setup = ''
+          vim.api.nvim_set_keymap("n", "<leader>e", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
+        '';
+      };
       copilot = lib.mkIf isFull {
         package = copilot-vim;
         setup = ''
