@@ -1,5 +1,10 @@
-{neovimConfigured, ...}: ({pkgs, ...}: {
+{
+  neovimConfigured,
+  vscode,
+  ...
+}: ({pkgs, ...}: {
   environment.systemPackages = [
+    vscode
     (pkgs.writeScriptBin "nvim" ''
       #!/usr/bin/env bash
       if [ -f /run/secrets/openai-api-key ]; then
