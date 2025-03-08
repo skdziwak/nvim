@@ -33,6 +33,7 @@
           vscodeExtensions = with pkgs.vscode-extensions;
             [
               asvetliakov.vscode-neovim
+              bierner.markdown-mermaid
             ]
             ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
               {
