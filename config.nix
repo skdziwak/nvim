@@ -198,7 +198,8 @@
               Full = {
                 prompt = "> You rewrite whole files in code blocks without line numbers."
               }
-            }
+            },
+            model = "claude-3.7-sonnet-thought"
           }
         '';
       };
