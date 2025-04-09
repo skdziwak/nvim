@@ -34,6 +34,7 @@
             [
               asvetliakov.vscode-neovim
               bierner.markdown-mermaid
+              ms-vscode-remote.remote-ssh
             ]
             ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
               {
