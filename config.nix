@@ -95,8 +95,8 @@
     theme = {
       enable = true;
       name = "catppuccin";
-      style = "mocha";
-      transparent = false;
+      style = "frappe";
+      transparent = true;
     };
 
     # Visuals
