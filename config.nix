@@ -218,7 +218,7 @@
         })
       '';
       globals = ''
-        function _G.AddAiCommentAndSaveAll()
+        function AddAiCommentAndSaveAll()
           -- Get comment prefix
           local comment_string = vim.bo.commentstring
           local comment_prefix
@@ -261,6 +261,8 @@
           vim.cmd('wa')
         end
       '';
+
+      vim.keymap.set # bind to <leader>aw ai!
     };
 
     # Keymaps
@@ -280,20 +282,6 @@
         action = "?```<CR>jV/```<CR>ky<C-o>";
       }
       {
-        key = "<leader>aW";
-        action = ":Copilot<CR>";
-        mode = ["n"];
-        silent = true;
-        desc = "Open copilot suggestions";
-      }
-      {
-        key = "<leader>aw";
-        action = ":CopilotChat<CR>";
-        mode = ["n"];
-        silent = true;
-        desc = "Open copilot chat";
-      }
-      {
         key = "<leader>gr";
         action = ":Gitsigns reset_hunk<CR>";
         mode = ["n"];
@@ -301,7 +289,7 @@
         desc = "Reset git hunk";
       }
       {
-        key = "<leader>ac";
+        key = "<leader>aw";
         mode = ["n"]; # Normal mode
         silent = true;
         desc = "Add AI comment and save all";
