@@ -217,6 +217,47 @@
         nested = true
       })
     '';
+    luaConfigRC.globals = ''
+      function AddAiCommentAndSaveAll()
+        -- Get comment prefix
+        local comment_string = vim.bo.commentstring
+        local comment_prefix
+
+        if comment_string and #comment_string > 0 then
+          local s_pos = string.find(comment_string, "%%s")
+          if s_pos then
+            comment_prefix = string.sub(comment_string, 1, s_pos - 1)
+            comment_prefix = comment_prefix:gsub("%s*$", "") -- Trim trailing spaces from prefix
+          else
+            comment_prefix = comment_string -- Use as is (e.g., for "--" in SQL/Lua, or "REM" if no %s)
+          end
+        else
+          comment_prefix = "//" -- Default if commentstring is not set or empty
+        end
+
+        -- If after processing, comment_prefix is empty (e.g., commentstring was just "%s"), use default
+        if not comment_prefix or #comment_prefix == 0 then
+          comment_prefix = "//"
+        end
+
+        -- Prompt for user input
+        local user_input = vim.fn.input("Enter text for AI comment: ")
+
+        -- If user cancels or enters empty string, do nothing
+        if user_input == nil or user_input == "" then
+          return
+        end
+
+        -- Construct the final text
+        local final_text = comment_prefix .. " " .. user_input .. " AI!"
+
+        -- Insert the text as a new line after the current line
+        vim.api.nvim_put({final_text}, 'l', true, true)
+
+        -- Save all buffers
+        vim.cmd('wa')
+      end
+    '';
 
     # Keymaps
     keymaps = [
@@ -260,48 +301,7 @@
         mode = ["n"]; # Normal mode
         silent = true;
         desc = "Add AI comment and save all";
-        // Move this action to a global function ai!
-        action = ''
-          lua <<EOF
-          -- Get comment prefix
-          local comment_string = vim.bo.commentstring
-          local comment_prefix
-
-          if comment_string and #comment_string > 0 then
-            local s_pos = string.find(comment_string, "%%s")
-            if s_pos then
-              comment_prefix = string.sub(comment_string, 1, s_pos - 1)
-              comment_prefix = comment_prefix:gsub("%s*$", "") -- Trim trailing spaces from prefix
-            else
-              comment_prefix = comment_string -- Use as is (e.g., for "--" in SQL/Lua, or "REM" if no %s)
-            end
-          else
-            comment_prefix = "//" -- Default if commentstring is not set or empty
-          end
-
-          -- If after processing, comment_prefix is empty (e.g., commentstring was just "%s"), use default
-          if not comment_prefix or #comment_prefix == 0 then
-            comment_prefix = "//"
-          end
-
-          -- Prompt for user input
-          local user_input = vim.fn.input("Enter text for AI comment: ")
-
-          -- If user cancels or enters empty string, do nothing
-          if user_input == nil or user_input == "" then
-            return
-          end
-
-          -- Construct the final text
-          local final_text = comment_prefix .. " " .. user_input .. " AI!"
-
-          -- Insert the text as a new line after the current line
-          vim.api.nvim_put({final_text}, 'l', true, true)
-
-          -- Save all buffers
-          vim.cmd('wa')
-          EOF
-        '';
+        action = "lua AddAiCommentAndSaveAll()";
       }
     ];
   };
