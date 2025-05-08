@@ -20,6 +20,7 @@
       nix.enable = true;
       sql.enable = true;
       html.enable = true;
+      # add more languages ai!
     };
 
     # Lsp config
