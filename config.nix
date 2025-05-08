@@ -81,6 +81,7 @@
       backup = false; # Disable backup files
       writebackup = false; # Disable backup files during writing
       swapfile = false; # Disable swap files
+      autoread = true; # Automatically read files when changed
     };
 
     # Statusline
