@@ -218,50 +218,55 @@
         })
       '';
       globals = ''
-                function AddAiCommentAndSaveAll()
-        # Refactor this function AI!
-                  -- Get comment prefix
-                  local comment_string = vim.bo.commentstring
-                  local comment_prefix
+        local function get_comment_prefix()
+          local comment_string = vim.bo.commentstring
+          local comment_prefix
 
-                  if comment_string and #comment_string > 0 then
-                    local s_pos = string.find(comment_string, "%%s")
-                    if s_pos then
-                      comment_prefix = string.sub(comment_string, 1, s_pos - 1)
-                      comment_prefix = comment_prefix:gsub("%s*$", "") -- Trim trailing spaces from prefix
-                    else
-                      comment_prefix = comment_string -- Use as is (e.g., for "--" in SQL/Lua, or "REM" if no %s)
-                    end
-                  else
-                    comment_prefix = "//" -- Default if commentstring is not set or empty
-                  end
+          if comment_string and #comment_string > 0 then
+            local s_pos = string.find(comment_string, "%%s")
+            if s_pos then
+              comment_prefix = string.sub(comment_string, 1, s_pos - 1)
+              comment_prefix = comment_prefix:gsub("%s*$", "") -- Trim trailing spaces from prefix
+            else
+              comment_prefix = comment_string -- Use as is (e.g., for "--" in SQL/Lua, or "REM" if no %s)
+            end
+          else
+            comment_prefix = "//" -- Default if commentstring is not set or empty
+          end
 
-                  -- If after processing, comment_prefix is empty (e.g., commentstring was just "%s"), use default
-                  if not comment_prefix or #comment_prefix == 0 then
-                    comment_prefix = "//"
-                  end
+          -- If after processing, comment_prefix is empty (e.g., commentstring was just "%s"), use default
+          if not comment_prefix or #comment_prefix == 0 then
+            comment_prefix = "//"
+          end
+          return comment_prefix
+        end
 
-                  -- Prompt for user input
-                  local user_input = vim.fn.input("Enter text for AI comment: ")
+        local function prompt_for_ai_text()
+          return vim.fn.input("Enter text for AI comment: ")
+        end
 
-                  -- If user cancels or enters empty string, do nothing
-                  if user_input == nil or user_input == "" then
-                    return
-                  end
+        function _G.AddAiCommentAndSaveAll()
+          local comment_prefix = get_comment_prefix()
+          local user_input = prompt_for_ai_text()
 
-                  -- Construct the final text
-                  local final_text = comment_prefix .. " " .. user_input .. " AI!"
+          -- If user cancels or enters empty string, do nothing
+          if user_input == nil or user_input == "" then
+            return
+          end
 
-                  -- Navigate to the end of the current line
-                  vim.cmd('normal! $')
+          -- Construct the final text
+          local final_text = comment_prefix .. " " .. user_input .. " AI!"
 
-                  -- Insert the text as a new line after the current line
-                  vim.api.nvim_put({final_text}, 'l', true, true)
+          -- Navigate to the end of the current line
+          vim.cmd('normal! $')
 
-                  -- Save all buffers
-                  vim.cmd('wa')
-                end
-                vim.keymap.set('n', '<leader>aw', function() _G.AddAiCommentAndSaveAll() end, { noremap = true, silent = true, desc = "Add AI comment and save all" })
+          -- Insert the text as a new line after the current line
+          vim.api.nvim_put({final_text}, 'l', true, true)
+
+          -- Save all buffers
+          vim.cmd('wa')
+        end
+        vim.keymap.set('n', '<leader>aw', function() _G.AddAiCommentAndSaveAll() end, { noremap = true, silent = true, desc = "Add AI comment and save all" })
       '';
     };
 
