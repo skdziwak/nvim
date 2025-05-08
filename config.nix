@@ -20,8 +20,6 @@
       nix.enable = true;
       sql.enable = true;
       html.enable = true;
-      python.enable = true;
-      json.enable = true;
     };
 
     # Lsp config
@@ -208,6 +206,8 @@
       vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
       vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 
+    '';
+    luaConfigRC.auto-reload = ''
       -- Auto reload on file change
       vim.api.nvim_create_augroup("AutoReload", { clear = true })
       vim.api.nvim_create_autocmd({"BufEnter", "FocusGained", "BufWritePost"}, {
