@@ -251,7 +251,8 @@
           -- Construct the final text
           local final_text = comment_prefix .. " " .. user_input .. " AI!"
 
-          -- Navigate to the end of the current line AI!
+          -- Navigate to the end of the current line
+          vim.cmd('normal! $')
 
           -- Insert the text as a new line after the current line
           vim.api.nvim_put({final_text}, 'l', true, true)
