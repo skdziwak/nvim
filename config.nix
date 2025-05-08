@@ -213,6 +213,8 @@
 
     '';
 
+    # AI: add some rc configuration so that buffer would be reloaded as soon as something writes to it AI!
+
     # Keymaps
     keymaps = [
       {
