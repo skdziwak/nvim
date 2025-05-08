@@ -305,7 +305,7 @@
         mode = ["n"]; # Normal mode
         silent = true;
         desc = "Add AI comment and save all";
-        action = "lua AddAiCommentAndSaveAll()";
+        action = "lua AddAiCommentAndSaveAll()"; # This does not work ai!
       }
     ];
   };
