@@ -166,11 +166,6 @@
 
     comments.comment-nvim.enable = true; # Easy code commenting
 
-    # AI
-    assistant = lib.mkIf isFull {
-      chatgpt.enable = false;
-    };
-
     # Extra plugins
     extraPlugins = with pkgs.vimPlugins; {
       nerdtree = {
@@ -211,9 +206,15 @@
       vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
       vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 
+      -- Auto reload on file change
+      vim.api.nvim_create_augroup("AutoReload", { clear = true })
+      vim.api.nvim_create_autocmd({"BufEnter", "FocusGained", "BufWritePost"}, {
+        group = "AutoReload",
+        pattern = "*",
+        command = "checktime",
+        nested = true
+      })
     '';
-
-    # AI: add some rc configuration so that buffer would be reloaded as soon as something writes to it AI!
 
     # Keymaps
     keymaps = [
