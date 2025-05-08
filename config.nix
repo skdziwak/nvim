@@ -24,6 +24,7 @@
 
     # Lsp config
     lsp = lib.mkIf isFull {
+      # Remove these comments AI!
       formatOnSave = true; # Format code when saving
       lspkind.enable = false; # Adds vscode-like pictograms to completion menu
       lightbulb.enable = true; # Shows a lightbulb when code actions are available
