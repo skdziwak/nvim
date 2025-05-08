@@ -262,7 +262,7 @@
         end
       '';
 
-      vim.keymap.set # bind to <leader>aw ai!
+      vim.keymap.set('n', '<leader>aw', function() _G.AddAiCommentAndSaveAll() end, { noremap = true, silent = true, desc = "Add AI comment and save all" })
     };
 
     # Keymaps
@@ -287,13 +287,6 @@
         mode = ["n"];
         silent = true;
         desc = "Reset git hunk";
-      }
-      {
-        key = "<leader>aw";
-        mode = ["n"]; # Normal mode
-        silent = true;
-        desc = "Add AI comment and save all";
-        action = "lua _G.AddAiCommentAndSaveAll()";
       }
     ];
   };
