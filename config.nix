@@ -217,6 +217,8 @@
         nested = true
       })
     '';
+    # <leader>ac should open a prompt to enter text. This text should be written in this format [line comment chars] [text] AI!
+    # And then all buffers should be written to with :wa
 
     # Keymaps
     keymaps = [
