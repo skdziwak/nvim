@@ -138,7 +138,6 @@
 
     utility = {
       ccc.enable = false; # Color picker and highlighter
-      vim-wakatime.enable = true; # Time tracking for coding
       icon-picker.enable = true; # Unicode icon/emoji picker
       surround.enable = true; # Easy text surrounds manipulation
       diffview-nvim.enable = true; # Git diff viewer
