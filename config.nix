@@ -292,6 +292,13 @@
         silent = true;
         desc = "Reset git hunk";
       }
+      {
+        key = "<leader>r";
+        desc = "Replace contents of this whole buffer with the contents of the clipboard";
+        mode = "n";
+        silent = true;
+        action = ":%d<CR>\"+p";
+      }
     ];
   };
 }
