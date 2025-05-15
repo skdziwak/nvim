@@ -9,7 +9,7 @@
   config.vim = {
     # Language Servers
     languages =
-      lib.mkIf isFull {
+      (if  isFull then {
         enableLSP = true;
         enableFormat = true;
         enableTreesitter = true;
@@ -24,7 +24,7 @@
         nix.enable = true;
         sql.enable = true;
         html.enable = true;
-      }
+      } else {})
       // extraLanguages;
 
     # Lsp config

@@ -34,14 +34,14 @@
     packages.x86_64-linux = rec {
       default = (neovimConfigured {isFull = true;}).neovim;
       min = (neovimConfigured {isFull = false;}).neovim;
-      rust =
+      rust-min =
         (neovimConfigured {
           isFull = false;
           extraLanguages = {
             enableLSP = true;
             enableFormat = true;
             enableTreesitter = true;
-            clang.enable = true;
+            enableExtraDiagnostics = true;
             rust.enable = true;
           };
         })
