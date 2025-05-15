@@ -9,22 +9,26 @@
   config.vim = {
     # Language Servers
     languages =
-      (if  isFull then {
-        enableLSP = true;
-        enableFormat = true;
-        enableTreesitter = true;
-        enableExtraDiagnostics = true;
-        terraform.enable = true;
-        java.enable = true;
-        rust.enable = true;
-        ts.enable = true;
-        clang.enable = true;
-        markdown.enable = true;
-        go.enable = true;
-        nix.enable = true;
-        sql.enable = true;
-        html.enable = true;
-      } else {})
+      (
+        if isFull
+        then {
+          enableLSP = true;
+          enableFormat = true;
+          enableTreesitter = true;
+          enableExtraDiagnostics = true;
+          terraform.enable = true;
+          java.enable = true;
+          rust.enable = true;
+          ts.enable = true;
+          clang.enable = true;
+          markdown.enable = true;
+          go.enable = true;
+          nix.enable = true;
+          sql.enable = true;
+          html.enable = true;
+        }
+        else {}
+      )
       // extraLanguages;
 
     # Lsp config
@@ -178,7 +182,7 @@
           vim.api.nvim_set_keymap("n", "<leader>e", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
         '';
       };
-      copilot = lib.mkIf isFull {
+      copilot = {
         package = copilot-vim;
         setup = ''
 
