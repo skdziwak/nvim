@@ -17,17 +17,35 @@
         allowUnfreePredicate = _: true;
       };
     };
-    neovimConfigured = {isFull}:
+    neovimConfigured = {
+      isFull,
+      extraLanguages ? {},
+    }:
       inputs.nvf.lib.neovimConfiguration {
         inherit pkgs;
         modules = [
-          (import ./config.nix {inherit isFull;})
+          (import ./config.nix {
+            inherit isFull;
+            inherit extraLanguages;
+          })
         ];
       };
   in rec {
     packages.x86_64-linux = rec {
       default = (neovimConfigured {isFull = true;}).neovim;
       min = (neovimConfigured {isFull = false;}).neovim;
+      rust =
+        (neovimConfigured {
+          isFull = false;
+          extraLanguages = {
+            enableLSP = true;
+            enableFormat = true;
+            enableTreesitter = true;
+            clang.enable = true;
+            rust.enable = true;
+          };
+        })
+        .neovim;
       vscode =
         (pkgs.vscode-with-extensions.override {
           vscodeExtensions = with pkgs.vscode-extensions;

@@ -1,26 +1,31 @@
-{isFull}: {
+{
+  isFull,
+  extraLanguages,
+}: {
   lib,
   pkgs,
   ...
 }: {
   config.vim = {
     # Language Servers
-    languages = lib.mkIf isFull {
-      enableLSP = true;
-      enableFormat = true;
-      enableTreesitter = true;
-      enableExtraDiagnostics = true;
-      terraform.enable = true;
-      java.enable = true;
-      rust.enable = true;
-      ts.enable = true;
-      clang.enable = true;
-      markdown.enable = true;
-      go.enable = true;
-      nix.enable = true;
-      sql.enable = true;
-      html.enable = true;
-    };
+    languages =
+      lib.mkIf isFull {
+        enableLSP = true;
+        enableFormat = true;
+        enableTreesitter = true;
+        enableExtraDiagnostics = true;
+        terraform.enable = true;
+        java.enable = true;
+        rust.enable = true;
+        ts.enable = true;
+        clang.enable = true;
+        markdown.enable = true;
+        go.enable = true;
+        nix.enable = true;
+        sql.enable = true;
+        html.enable = true;
+      }
+      // extraLanguages;
 
     # Lsp config
     lsp = lib.mkIf isFull {
