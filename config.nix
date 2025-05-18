@@ -12,7 +12,6 @@
       (
         if isFull
         then {
-          enableLSP = true;
           enableFormat = true;
           enableTreesitter = true;
           enableExtraDiagnostics = true;
@@ -32,14 +31,14 @@
       // extraLanguages;
 
     # Lsp config
-    lsp = lib.mkIf isFull {
+    lsp = {
+      enable = true;
       formatOnSave = true; # Format code when saving
       lspkind.enable = false; # Adds vscode-like pictograms to completion menu
       lightbulb.enable = true; # Shows a lightbulb when code actions are available
       lspsaga.enable = false; # Provides enhanced LSP UI components
       trouble.enable = true; # Pretty list for diagnostics, references, etc.
       lspSignature.enable = true; # Shows function signature when typing
-      lsplines.enable = false; # Shows diagnostic virtual lines
       nvim-docs-view.enable = true; # Shows LSP hover documentation in sidebar
       lspconfig.sources.python-lsp = ''
         lspconfig.basedpyright.setup {
