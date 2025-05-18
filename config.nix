@@ -12,15 +12,11 @@
       (
         if isFull
         then {
-          enableFormat = true;
-          enableTreesitter = true;
-          enableExtraDiagnostics = true;
           terraform.enable = true;
           java.enable = true;
           rust.enable = true;
           ts.enable = true;
           clang.enable = true;
-          markdown.enable = true;
           go.enable = true;
           nix.enable = true;
           sql.enable = true;
@@ -28,6 +24,12 @@
         }
         else {}
       )
+      // {
+        enableFormat = true;
+        enableTreesitter = true;
+        enableExtraDiagnostics = true;
+        markdown.enable = true;
+      }
       // extraLanguages;
 
     # Lsp config
