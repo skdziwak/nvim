@@ -28,7 +28,6 @@
         enableFormat = true;
         enableTreesitter = true;
         enableExtraDiagnostics = true;
-        markdown.enable = true;
       }
       // extraLanguages;
 
